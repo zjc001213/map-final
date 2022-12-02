@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    margin: 20px;
+}
+
+.rainfall {
+    /* background-image: url("./png/rain.png"); */
+}
