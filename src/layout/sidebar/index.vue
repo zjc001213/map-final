@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar">
-    <h1>sidebar</h1>
     <sidebar-item
       v-for="(route, index) in router"
       :key="index"
@@ -43,7 +42,7 @@ export default {
 <style scoped>
 .sidebar {
   width: 210px;
-  background: orange;
+  background: #515253;
   height: 100%;
 }
 </style>

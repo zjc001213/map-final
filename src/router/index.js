@@ -10,28 +10,34 @@ const routes = [
         redirect: '/home',
         // component: Layout,
         meta: {
-            title: 'redirect'
+            title: 'redirect',
+            icon: 'el-icon-s-home'
+
         }
     },
     {
         path: '/demo',
         component: () => import("@/views/MyDemo.vue"),
         meta: {
-            title: 'demo'
+            title: 'demo',
+            icon: "ticket"
         }
     },
     {
         path: '/home',
         component: () => import("@/views/homePage/index.vue"),
         meta: {
-            title: '首页'
+            title: '首页',
+            icon: 'el-icon-s-home'
+
         }
     },
     {
         path: '/gate',
         component: () => import("@/views/gate/index.vue"),
         meta: {
-            title: '闸站'
+            title: '闸站',
+            icon: 'el-icon-s-ticket'
         }
 
     },
@@ -39,7 +45,8 @@ const routes = [
         path: '/rainfall',
         component: () => import("@/views/rainfall/index.vue"),
         meta: {
-            title: '雨量站'
+            title: '雨量站',
+            icon: "el-icon-s-flag"
         }
     }
 

@@ -25,18 +25,21 @@ export default {
 <style scoped>
 .navbar {
   width: 100%;
-  height: 86px;
-  background: skyblue;
-  line-height: 86px;
+  height: 60px;
+  /* background: #6D67E4; */
+  background: rgba(109, 103, 228, 1);
+  line-height: 60px;
   text-align: center;
+  color: white;
+
 }
 .layout {
   width: 100%;
   height: 100%;
-  background: gold;
+  background: #434242;
 }
 .main-container {
-  height: calc(100% - 86px);
+  height: calc(100% - 60px);
   width: 100%;
   display: flex;
   flex-wrap: nowrap;

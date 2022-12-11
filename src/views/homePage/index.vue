@@ -33,8 +33,6 @@ export default {
       getGatestationList().then(data => {
         this.gatestation_map = data.data.data
       })
-
-      
     }
   }
 };

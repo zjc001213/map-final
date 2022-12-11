@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './axios.js'
 
 // const service = axios.create({
 //     baseURL: 'http://10.192.193.75:8080',
@@ -13,12 +13,12 @@ import axios from 'axios'
 
 
 export function getRainfallList() {
-    return axios.get('http://10.192.9.133:8080/rainfall')
+    return axios.get('/rainfall')
 }
 
 //// 雨量站 新增
 export function rainfall_add(add_data) {
-    return axios.post('http://10.192.9.133:8080/rainfall',add_data)
+    return axios.post('/rainfall', add_data)
 
 }
 
@@ -29,28 +29,38 @@ export function rainfall_edit() {
 
 // 雨量站 删除
 export function rainfall_del(id) {
-    return axios.delete(`http://10.192.9.133:8080/rainfall/${id}`)
+    return axios.delete(`/rainfall/${id}`)
 }
 
 
 
 //闸站信息获取
 export function getGatestationList() {
-    return axios.get("http://10.192.9.133:8080/gatestation")
+    return axios.get("/gatestation")
 }
 
 // 闸站信息删除
 export function gatestation_del(id) {
-    return axios.delete(`http://10.192.9.133:8080/gatestation/${id}`)
+    return axios.delete(`/gatestation/${id}`)
 
 }
 
 //// 新增闸站
 export function gatestation_add(add_data) {
-    return axios.post('http://10.192.9.133:8080/gatestation',add_data )
+    return axios.post('/gatestation', add_data)
 }
 
 
 export function getHour(where) {
-    return axios.get(`http://10.192.9.133:8080/hour?station=${where}`)
+    return axios.get(`/hour?station=${where}`)
+}
+
+
+export function infoDownload(name, hour) {
+    // http://3f9406f9.r6.cpolar.top/hour/download?station=%E5%8C%97%E5%B1%B1&hours=3
+    return axios.get(`/hour/download?station=${name}&hours=${hour}`)
+}
+
+export function getSimulateInfo() {
+    return axios.get("/simulate")
 }

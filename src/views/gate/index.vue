@@ -24,12 +24,23 @@
       </el-table-column>
     </el-table>
 
+    <div class="pagination-container">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="gatestation_map.length"
+        :current-page="currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentPage"
+      >
+      </el-pagination>
+    </div>
+
     <el-dialog title="新增闸站" :visible="show_add">
       <span>name</span> <el-input type="text" v-model="add_name"></el-input>
       <span>latitude</span>
-      <el-input type="text" v-model="add_latitude"></el-input>
-      <span>longitude</span>
       <el-input type="text" v-model="add_longitude"></el-input>
+      <span>longitude</span>
+      <el-input type="text" v-model="add_latitude"></el-input>
       <template slot="footer">
         <el-button @click="show_add = false">取消</el-button>
         <el-button type="primary" @click="handleClose">提交</el-button>
@@ -53,6 +64,7 @@ export default {
       add_name: "",
       add_latitude: "",
       add_longitude: "",
+      currentPage: 1,
     };
   },
   created() {},
@@ -94,10 +106,28 @@ export default {
     handleAdd() {
       this.show_add = true;
     },
+    // 当前页数更改触发
+    handleCurrentPage(val) {
+      console.log("page change", val);
+      this.list = [];
+      if (this.rainfall_map.length <= 10) {
+        this.list = this.gatestation_map;
+      } else {
+        for (let i = (val - 1) * 10; i < val * 10; i++) {
+          this.list.push(this.gatestation_map[i]);
+        }
+      }
+    },
+    // 总页数改变触发
+    handleSizeChange() {},
   },
 };
 </script>
 
 
 <style scoped>
+
+.pagination-container {
+
+}
 </style>

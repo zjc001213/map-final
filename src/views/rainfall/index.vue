@@ -1,12 +1,25 @@
 <template>
   <div class="app-container">
-    <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
-      >新增雨量站</el-button
-    >
-    <el-table :data="rainfall_map" style="width: 100%">
+    <div>
+      <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+        >新增雨量站</el-button
+      >
+      <div style="display: inline; float: right; margin-right: 30px">
+        <el-input
+          type="text"
+          style="width: 200px; margin: 0 30px"
+          v-model="queryInfo"
+          placeholder="
+Query what you want"
+        />
+        <el-button type="primary" @click="queryInformation">查询</el-button>
+      </div>
+    </div>
+
+    <el-table :data="list" style="width: 100%">
       <el-table-column prop="name" label="雨量站点名"></el-table-column>
-      <el-table-column prop="latitude" label="经度"></el-table-column>
-      <el-table-column prop="longitude" label="纬度"></el-table-column>
+      <el-table-column prop="longitude" label="经度"></el-table-column>
+      <el-table-column prop="latitude" label="纬度"></el-table-column>
       <el-table-column label="操作" width="120">
         <template slot-scope="scope">
           <el-button @click="handleEdit()" type="text" size="small"
@@ -18,12 +31,24 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="rainfall_map.length"
+        :current-page="currentPage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentPage"
+        page-size.sync="10"
+      >
+      </el-pagination>
+    </div>
     <el-dialog title="新增雨量站" :visible="show_add">
       <span>name</span> <el-input type="text" v-model="add_name"></el-input>
       <span>latitude</span>
-      <el-input type="text" v-model="add_latitude"></el-input>
-      <span>longitude</span>
       <el-input type="text" v-model="add_longitude"></el-input>
+      <span>longitude</span>
+      <el-input type="text" v-model="add_latitude"></el-input>
       <template slot="footer">
         <el-button @click="show_add = false">取消</el-button>
         <el-button type="primary" @click="handleClose">提交</el-button>
@@ -50,26 +75,25 @@ export default {
       add_name: "",
       add_latitude: "",
       add_longitude: "",
+      currentPage: 1,
+      queryInfo: "",
     };
   },
   computed: {
     ...mapGetters(["rainfall_map"]),
   },
-  mounted() {
-    // this.getList()
-  },
-
-  methods: {
-    getList() {
-      getRainfallList().then((data) => {
-        this.list = data.data;
-        if (data.data.code == 200) {
-          this.list = data.data.data;
-        } else {
-          // console.log(data.data.msg);
-        }
-      });
+  watch: {
+    rainfall_map: {
+      handler() {
+        this.handleCurrentPage(this.currentPage);
+      },
+      deep: true,
     },
+  },
+  mounted() {
+    this.handleCurrentPage(this.currentPage);
+  },
+  methods: {
     handleEdit(val) {
       console.log("id", val);
     },
@@ -98,6 +122,31 @@ export default {
         this.add_longitude = "";
         this.$store.dispatch("getRainfallList");
       });
+    },
+    // 当前页改变触发
+    handleCurrentPage(val) {
+      this.list = [];
+      if (this.rainfall_map.length <= 10) {
+        this.list = this.rainfall_map;
+      } else if ((val - 1) * 10 + 10 > this.rainfall_map.length) {
+        for (let i = (val - 1) * 10; i < this.rainfall_map.length; i++) {
+          this.list.push(this.rainfall_map[i]);
+        }
+      } else {
+        for (let i = (val - 1) * 10; i < val * 10; i++) {
+          this.list.push(this.rainfall_map[i]);
+        }
+      }
+    },
+    // 总页数改变触发
+    handleSizeChange() {},
+    // 查询信息
+    queryInformation() {
+      if (this.queryInfo.trim() == "") {
+        console.log("请输入想要查询的站点");
+      } else {
+        // 发送请求查询站点信息并返回渲染到页面上
+      }
     },
   },
 };
