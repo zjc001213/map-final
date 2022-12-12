@@ -20,7 +20,7 @@ function endLoading() {
 // hch  10.192.193.75:8080
 const service = axios.create({
     // baseURL: 'http://10.192.9.133:8080/',
-    baseURL: 'http://2e758d3a.vip.cpolar.cn',
+    baseURL: 'localhost:8081/',
     timeout:2000
 })
 
